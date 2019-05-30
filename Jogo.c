@@ -138,7 +138,7 @@ int main ()
 		scanf("%s", &CPF);
 		
 		printf("Digite o Jogo do jogador Numero %d\n", i+1);
-		scanf("%d", &playedValue);
+		scanf("%d %d %d %d %d %d", &playedValue[0], &playedValue[1], &playedValue[2], &playedValue[3],&playedValue[4],&playedValue[5]);
 		
 		int drawNumber = rand() % numberOfGames + 1;
 		int hits = 0;
