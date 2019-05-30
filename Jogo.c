@@ -8,6 +8,8 @@ int main ()
     int lastGame[60], frequency[60], frequencyTop[60][2],frequencyTemp[2]; 
     int game[numberOfGames][6], played[numberOfGames][6], i, j, k, aux;
     char isExists;
+    
+    //
     for (i=0; i<60; i++){
 		frequency[i] = 0;
 	}
@@ -92,7 +94,7 @@ int main ()
 	
 	printf("\n\n\nOs 15 numeos que mais sairam!\n\n\n");
 	for(i=0; i<15;i++){
-		printf("%d = %d: %d\n", i+1, frequencyTop[i][0], frequencyTop[i][1]);
+		printf("%d = %d: %d\n", i+1, frequencyTop[i][0]+1, frequencyTop[i][1]);
 		i++;
 	}
 	
@@ -151,7 +153,7 @@ int main ()
 			}
 		}
 		
-		printf("Parabéns %s, você acertou %d números! Sorteio [ %d ]\n", Name, hits, drawNumber);
+		printf("Parabéns %s, você acertou %d números! Sorteio [ %d ]\n", Name, hits, drawNumber+1);
 		
 	}
 		
