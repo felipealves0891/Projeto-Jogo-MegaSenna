@@ -5,16 +5,16 @@
 
 int main ()
 {
-    int lastGame[60], frequency[60], frequencyTop[60][2],frequencyTemp[2]; 
+    int lastGame[60], frequency[60], frequencyTop[60][2],frequencyTemp[2], doubleMostBacked[60][60], doubleMostBackedTop[3600][3]; 
     int game[numberOfGames][6], played[numberOfGames][6], i, j, k, aux;
     char isExists;
     
-    //
     for (i=0; i<60; i++){
 		frequency[i] = 0;
+		for(j=0; j<60;j++)
+		doubleMostBacked[i][j] = 0;
 	}
         
-    
     srand (time(NULL));
     
     //Sorteia os numeros
@@ -83,18 +83,58 @@ int main ()
         }
 	}
 	
-	j = 0;
-	//Exibe as quinze duplas
+	//Define as duplas que mais sairam nos sorteios
+	for(i = 0; i < numberOfGames; i++){
+		for(j = 0; j < 60; j++){
+			for(k = 0; k < 60; k++){
+				if(played[i][j] == (j+1) && played[i][k] == k+1 && j != k){
+					doubleMostBacked[j][k]++;	
+				}		
+			}
+		}
+	}		
+	
+	i = 0;
+	//Copia as duplas
+	for(k = 0; k < 60; k++){
+		for(j = 0; j < 60; j++){	
+			doubleMostBackedTop[i][0] = k;
+			doubleMostBackedTop[i][1] = j;
+			doubleMostBackedTop[i][2] = doubleMostBacked[k][j];
+			i++; 
+		}
+	}
+	
+	i = 0;
+	//Ordena as duplas
+	for(k = 0; k < 3600; k++){
+		for(j = k; j < 3600; j++){
+			if(doubleMostBackedTop[k][2] < doubleMostBackedTop[j][2]){
+				frequencyTemp[0] = doubleMostBackedTop[k][0];
+				frequencyTemp[1] = doubleMostBackedTop[k][1];
+				frequencyTemp[2] = doubleMostBackedTop[k][2];
+			    doubleMostBackedTop[k][0] = doubleMostBackedTop[j][0];
+			    doubleMostBackedTop[k][1] = doubleMostBackedTop[j][1];
+			    doubleMostBackedTop[k][2] = doubleMostBackedTop[j][2];
+			    doubleMostBackedTop[j][0] = frequencyTemp[0];
+			    doubleMostBackedTop[j][1] = frequencyTemp[1];
+			    doubleMostBackedTop[j][2] = frequencyTemp[2];
+			}   	
+		}
+	}
+	
 	printf("\n\n\nAs 15 duplas que mais sairam!\n\n\n");
-	for(i=0; i<30;i++){
-		printf("%d = %d: %d e %d: %d\n", j+1, frequencyTop[i][0], frequencyTop[i][1], frequencyTop[i+1][0], frequencyTop[i+1][1]);
-		i++;
-		j++;
+	j = 1;
+	for(k = 0; k < 30; k++){
+		if((k%2) == 0){ // Para limpar problemas tipo (0 & 1) e (1 & 0)
+			printf("%d = %d e %d: %d\n", j++, doubleMostBackedTop[k][0]+1, doubleMostBackedTop[k][1]+1, doubleMostBackedTop[k][2]);	
+		}	
 	}
 	
 	printf("\n\n\nOs 15 numeos que mais sairam!\n\n\n");
-	for(i=0; i<15;i++){
-		printf("%d = %d: %d\n", i+1, frequencyTop[i][0]+1, frequencyTop[i][1]);
+	j = 1;
+	for(i=0; i<30;i++){
+		printf("%d = %d: %d\n", j++, frequencyTop[i][0]+1, frequencyTop[i][1]);
 		i++;
 	}
 	
